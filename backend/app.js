@@ -33,7 +33,7 @@ const app = express();
 //rqijtVEcmyc64BZo - password for the mongo Atlas cluster
 mongoose
   .connect(
-    "mongodb+srv://TanChow:rqijtVEcmyc64BZo@cluster0-fwcvg.mongodb.net/node-angular",
+    "mongodb+srv://TanChow:" + process.env.MONGO_ATLAS_PWD + "@cluster0-fwcvg.mongodb.net/node-angular",
     { useNewUrlParser: true }
   )
   .then(() => {

@@ -47,7 +47,7 @@ exports.loginUser = (req, res, next) => {
         console.log(fetchedUser)
         // generate the JWT token since it is a valid user
         const token = jwt.sign({email: fetchedUser.email, userId: fetchedUser._id},
-         'secret_this_should_be_longer', 
+         process.env.JWT_KEY, 
         {expiresIn: '1h' });
         console.log(token);
         res.status(200).json({
