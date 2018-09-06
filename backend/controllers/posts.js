@@ -45,8 +45,10 @@ exports.createPost =   (req, res, next) => {
     console.log(post);
     Post.updateOne({ _id: req.params.id, creator: req.userData.userId }, post)
     .then(result => {
+      // check the result here to see the fields which can be used
+      // in the if condition 'n' and nModified are the relevant fields
       console.log(result);
-      if (result.nModified > 0) {
+      if (result.n > 0) {
         res.status(200).json({ message: "Update successful!" });
       } else {
         res.status(401).json( {message: "Update Failed!"} )
