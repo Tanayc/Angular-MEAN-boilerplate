@@ -20,6 +20,10 @@ export class PostCreateComponent implements OnInit {
   imagePreview: string;
   private mode = "create";
   private postId: string;
+  date: Date;
+  minDate = new Date(2018, 5, 10);
+  maxDate = new Date(2020, 0, 1);
+  startDate = new Date(2018, 8, 15);
 
   constructor(
     public postsService: PostsService,
@@ -93,16 +97,31 @@ export class PostCreateComponent implements OnInit {
       this.postsService.addPost(
         this.form.value.title,
         this.form.value.content,
-        this.form.value.image
+        this.form.value.image,
+        this.date
       );
     } else {
       this.postsService.updatePost(
         this.postId,
         this.form.value.title,
         this.form.value.content,
-        this.form.value.image
+        this.form.value.image,
+        this.date
       );
     }
     this.form.reset();
   }
+
+  onDateChanged(event) {
+    this.date = new Date(event.value);
+    console.log(this.date);
+  }
+
+  myFilter = (d: Date): boolean => {
+    const date = d.getDate();
+    console.log('day', date);
+    // Prevent these and Sunday from being selected.
+    return date !== 26 && date !== 27;
+  }
+
 }

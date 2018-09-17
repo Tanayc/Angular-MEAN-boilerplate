@@ -19,4 +19,10 @@
     </mat-form-field>
     <button mat-raised-button color="accent" type="submit">Save Post</button>  
   </form>
+  <mat-form-field class="example-full-width">
+    <input matInput [matDatepickerFilter]="myFilter" [min]="startDate" [max]="maxDate"  [matDatepicker]="picker" placeholder="Choose a date" 
+    (dateChange)="onDateChanged($event)">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker [startAt]="startDate"></mat-datepicker>
+  </mat-form-field>
 </mat-card>

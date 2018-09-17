@@ -23,6 +23,7 @@ export class PostsService {
         // map the post data to change the id field to take the _id field
         // from the database
         map(postData => {
+          // console.log('posts ---- ', postData);
           return {
             posts: postData.posts.map(post => {
             return {
@@ -33,12 +34,11 @@ export class PostsService {
               creator: post.creator
             };
           }),
-          maxPosts: postData.maxCount
+          maxPosts: postData.maxPosts
         };
         }),
       )
       .subscribe(transformedPosts => {
-        console.log(transformedPosts);
         this.posts = transformedPosts.posts;
         this.postsUpdated.next({post: [...this.posts], postCount: transformedPosts.maxPosts});
       });
@@ -54,11 +54,12 @@ export class PostsService {
     );
   }
 
-  addPost(title: string, content: string, image: File) {
+  addPost(title: string, content: string, image: File, date: Date) {
     const postData = new FormData();
     postData.append('title', title);
     postData.append('content', content);
     postData.append('image', image, title);
+    postData.append('date', date.toDateString());
     this.http
       .post<{ message: string; post: Post }>(
         POST_URL,
@@ -77,7 +78,7 @@ export class PostsService {
       });
   }
 
-  updatePost(id: string, title: string, content: string, image: File | string) {
+  updatePost(id: string, title: string, content: string, image: File | string, date: Date) {
     let postData: Post | FormData;
     if (typeof image === 'object') {
       postData = new FormData();
@@ -85,13 +86,15 @@ export class PostsService {
       postData.append('title', title);
       postData.append('content', content);
       postData.append('image', image, title);
+      postData.append('date', date.toDateString());
     } else {
       postData = {
         id: id,
         title: title,
         content: content,
         imagePath: image,
-        creator: null
+        creator: null,
+        date: date
       };
     }
     this.http

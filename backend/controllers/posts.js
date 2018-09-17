@@ -7,6 +7,7 @@ exports.createPost =   (req, res, next) => {
       title: req.body.title,
       content: req.body.content,
       imagePath: url + "/images/" + req.file.filename,
+      date: req.body.date,
       creator: req.userData.userId
     });
     // send back the created post Id
@@ -18,6 +19,7 @@ exports.createPost =   (req, res, next) => {
           id: createdPost._id,
           title: createdPost.title,
           content: createdPost.content,
+          date: createdPost.date,
           imagePath: createdPost.imagePath
         }
       });
@@ -40,6 +42,7 @@ exports.createPost =   (req, res, next) => {
       title: req.body.title,
       content: req.body.content,
       imagePath: imagePath,
+      date: req.body.date,
       creator: req.userData.userId
     });
     console.log(post);
